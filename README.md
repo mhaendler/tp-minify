@@ -1,10 +1,10 @@
-## TpMinify - third-party module for the Zend Framework 2
+## TpMinify - third-party module for Laminas
 This module uses the [Steve (mrclay) Clay's Minify](http://github.com/mrclay/minify) library for styles and scripts obfuscation.
 
 ## Installation
 ### Composer
  * Install the [Composer](http://getcomposer.org/doc/00-intro.md)
- * Add ```"kkamkou/tp-minify": "dev-master"``` to a ```composer.json``` file, to the ```require``` section
+ * Add ```"mhaendler/tp-minify": "dev-master"``` to a ```composer.json``` file, to the ```require``` section
  * Execute ```composer update```
  * Add ```'modules' => array('TpMinify', ...)``` to the ```application.config.php``` file of your project. *Important thing is to place the "TpMinify" before any other modules.*
  * Open (just an example) the ```Frontend/config/module.config.php``` and add this config stub:

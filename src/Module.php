@@ -1,18 +1,20 @@
 <?php
 /**
- * TpMinify - third-party module for the Zend Framework 2
+ * TpMinify - third-party module for the Laminas
+ *
  *
  * @category Module
  * @package  TpMinify
- * @author   Kanstantsin A Kamkou (2ka.by)
+ * @author   Original Author of the Plugin: Kanstantsin A Kamkou (2ka.by)
+ * @author	 Markus Händler <mhaendler.me>
  * @license  http://opensource.org/licenses/MIT The MIT License (MIT)
- * @link     http://github.com/kkamkou/tp-minify/
+ * @link     http://github.com/mhaendler/tp-minify/
  */
 
 namespace TpMinify;
 
-use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zend\ModuleManager\Feature\ViewHelperProviderInterface;
+use Laminas\ModuleManager\Feature\ConfigProviderInterface;
+use Laminas\ModuleManager\Feature\ViewHelperProviderInterface;
 
 /**
  * Class Module

@@ -11,12 +11,12 @@
 
 namespace TpMinify\Controller;
 
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\Stdlib\DispatchableInterface;
-use Zend\Stdlib\ResponseInterface;
-use Zend\Stdlib\RequestInterface;
-use Zend\Http\Headers;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Stdlib\DispatchableInterface;
+use Laminas\Stdlib\ResponseInterface;
+use Laminas\Stdlib\RequestInterface;
+use Laminas\Http\Headers;
 
 use Minify;
 

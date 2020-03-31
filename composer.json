@@ -1,11 +1,11 @@
 {
-    "name": "kkamkou/tp-minify",
-    "description": "Zend Framework 2 module which uses the Steve (mrclay) Clay's Minify library for styles and scripts obfuscation",
+    "name": "mhaendler/tp-minify",
+    "description": "Laminas module which uses the Steve (mrclay) Clay's Minify library for styles and scripts obfuscation",
     "type": "library",
-    "homepage": "http://github.com/kkamkou/tp-minify",
+    "homepage": "http://github.com/mhaendler/tp-minify",
     "license": "MIT",
     "keywords": [
-        "zf2",
+        "laminas",
         "minify",
         "obfuscation",
         "asset"
@@ -14,10 +14,14 @@
         {
             "name": "Kanstantsin Kamkou",
             "email": "kkamkou@gmail.com"
+        },
+        {
+            "name": "Markus Händler",
+            "email": "info@mhaendler.me"
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=7.2",
         "zendframework/zendframework": ">=2.2",
         "mrclay/minify": ">=2.2"
     },

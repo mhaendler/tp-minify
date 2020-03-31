@@ -11,9 +11,9 @@
 
 namespace TpMinify\View\Helper;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\View\Helper\HeadScript as HeadScriptOriginal;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceLocatorAwareInterface;
+use Laminas\View\Helper\HeadScript as HeadScriptOriginal;
 use Minify;
 
 /**
