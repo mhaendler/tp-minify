@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Lehmannsportal\Factory\Controller;
+namespace TpMinify\Factory\Controller;
 
 use Interop\Container\ContainerInterface;
 use Laminas\ServiceManager\Factory\FactoryInterface;

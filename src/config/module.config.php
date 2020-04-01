@@ -9,7 +9,7 @@
  * @link     http://github.com/kkamkou/tp-minify/
  */
 
-use Lehmannsportal\Factory\Controller\IndexControllerFactory;
+use TpMinify\Factory\Controller\IndexControllerFactory;
 use TpMinify\Controller\IndexController;
 use TpMinify\Factory\View\Helper\HeadScriptFactory;
 use TpMinify\View\Helper\HeadScript;
