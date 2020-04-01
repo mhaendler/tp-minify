@@ -9,50 +9,62 @@
  * @link     http://github.com/kkamkou/tp-minify/
  */
 
-return array(
-    'router' => array(
-        'routes' => array(
-            'TpMinify' => array(
+use Lehmannsportal\Factory\Controller\IndexControllerFactory;
+use TpMinify\Controller\IndexController;
+use TpMinify\Factory\View\Helper\HeadScriptFactory;
+use TpMinify\View\Helper\HeadScript;
+
+return [
+    'router' => [
+        'routes' => [
+            'TpMinify' => [
                 'type' => 'Literal',
                 'may_terminate' => true,
-                'options' => array(
+                'options' => [
                     'route'    => '/min',
-                    'defaults' => array(
-                        'controller' => 'TpMinifyProxy',
+                    'defaults' => [
+                        'controller' => IndexController::class,
                         'action'     => 'index'
-                    )
-                )
-            )
-        )
-    ),
-    'controllers' => array(
-        'invokables' => array('TpMinifyProxy' => 'TpMinify\Controller\Index')
-    ),
-    'TpMinify' => array(
+					]
+				]
+			]
+		]
+	],
+    'controllers' => [
+        'factories' => [
+        	IndexController::class => IndexControllerFactory::class,
+		]
+	],
+	'view_helpers' => [
+		'factories' => [
+			HeadScript::class => HeadScriptFactory::class,
+		]
+	],
+    'TpMinify' => [
         'documentRoot' => false,
         'errorLogger' => false,
         'allowDebugFlag' => false,
         'cacheFileLocking' => true,
         'uploaderHoursBehind' => 0,
         'cachePath' => false,
-        'symlinks' => array(),
-        'serveOptions' => array(
+        'symlinks' => [],
+        'serveOptions' => [
             'bubbleCssImports' => false,
             'maxAge' => 1800,
-            'minApp' => array(
+            'minApp' => [
                 'groupsOnly' => false,
-                'groups' => array(
+                'groups' => [
                     // your groups list
-                )
-            )
-        ),
-        'helpers' => array( // $this->headScript()->CaptureStart/CaptureEnd()
-            'headScript' => array(
+				]
+			]
+		],
+        'helpers' => [ // $this->headScript()->CaptureStart/CaptureEnd()
+            'headScript' => [
                 'enabled' => false,
-                'options' => array(
+                'options' => [
                     'maxAge' => 86400 // and other serveOptions options
-                )
-            )
-        )
-    )
-);
+				]
+			]
+		]
+	]
+];

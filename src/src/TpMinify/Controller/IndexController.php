@@ -11,9 +11,7 @@
 
 namespace TpMinify\Controller;
 
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\Stdlib\DispatchableInterface;
+use Laminas\Mvc\Controller\AbstractActionController;
 use Laminas\Stdlib\ResponseInterface;
 use Laminas\Stdlib\RequestInterface;
 use Laminas\Http\Headers;
@@ -23,36 +21,18 @@ use Minify;
 /**
  * Class Index
  * @package TpMinify\Controller
- * @see DispatchableInterface
- * @see ServiceLocatorAwareInterface
  */
-class Index implements DispatchableInterface, ServiceLocatorAwareInterface
+class IndexController extends AbstractActionController
 {
-    /**
-     * @var ServiceLocatorInterface
-     */
-    protected $serviceLocator;
 
-    /**
-     * Set serviceManager instance
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return void
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
+	/**
+	 * @var array $config	Configuration Array from Laminas
+	 */
+	protected $config;
 
-    /**
-     * Retrieve serviceManager instance
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
+	public function __construct(Array $config){
+		$this->config = $config;
+	}
 
     /**
      * Execute the request
@@ -64,8 +44,7 @@ class Index implements DispatchableInterface, ServiceLocatorAwareInterface
     public function dispatch(RequestInterface $request, ResponseInterface $response = null)
     {
         // the config hash
-        $config = $this->getServiceLocator()->get('Config');
-        $config = $config['TpMinify'];
+        $config = $this->getConfig()['TpMinify'];
 
         // some important stuff
         $config['serveOptions']['quiet'] = true;
@@ -104,4 +83,8 @@ class Index implements DispatchableInterface, ServiceLocatorAwareInterface
             ->setStatusCode($result['statusCode'])
             ->setContent($result['content']);
     }
+
+    protected function getConfig():array{
+    	return $this->config;
+	}
 }

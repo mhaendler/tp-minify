@@ -10,9 +10,6 @@
  */
 
 namespace TpMinify\View\Helper;
-
-use Laminas\ServiceManager\ServiceLocatorInterface;
-use Laminas\ServiceManager\ServiceLocatorAwareInterface;
 use Laminas\View\Helper\HeadScript as HeadScriptOriginal;
 use Minify;
 
@@ -21,33 +18,17 @@ use Minify;
  * @package TpMinify\View\Helper
  * @see ServiceLocatorAwareInterface
  */
-class HeadScript extends HeadScriptOriginal implements ServiceLocatorAwareInterface
+class HeadScript extends HeadScriptOriginal
 {
-    /**
-     * @var ServiceLocatorInterface
-     */
-    protected $serviceLocator;
 
-    /**
-     * Set serviceManager instance
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return void
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-    }
+	/**
+	 * @var array $config	Configuration Array from Laminas
+	 */
+	protected $config;
 
-    /**
-     * Retrieve serviceManager instance
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
+	public function __construct(array $config){
+		$this->config = $config;
+	}
 
     /**
      * Create script HTML
@@ -61,7 +42,7 @@ class HeadScript extends HeadScriptOriginal implements ServiceLocatorAwareInterf
     public function itemToString($item, $indent, $escapeStart, $escapeEnd)
     {
         if (!empty($item->source)) {
-            $config = $this->getServiceLocator()->getServiceLocator()->get('Config');
+            $config = $this->getConfig();
             $config = $config['TpMinify']['helpers']['headScript'];
             if ($config['enabled']) {
                 $result = Minify::serve(
@@ -90,4 +71,11 @@ class HeadScript extends HeadScriptOriginal implements ServiceLocatorAwareInterf
 
         return parent::itemToString($item, $indent, $escapeStart, $escapeEnd);
     }
+
+	/**
+	 * @return array
+	 */
+    protected function getConfig() : array{
+    	return $this->config;
+	}
 }
