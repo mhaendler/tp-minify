@@ -34,57 +34,59 @@ class IndexController extends AbstractActionController
 		$this->config = $config;
 	}
 
-    /**
-     * Execute the request
-     *
-     * @param RequestInterface $request
-     * @param ResponseInterface $response (Default: null)
-     * @return \Zend\Http\PhpEnvironment\Response
-     */
-    public function dispatch(RequestInterface $request, ResponseInterface $response = null)
-    {
-        // the config hash
-        $config = $this->getConfig()['TpMinify'];
+	/**
+	 * Execute the request
+	 *
+	 * @param RequestInterface $request
+	 * @param ResponseInterface $response (Default: null)
+	 * @return \Zend\Http\PhpEnvironment\Response
+	 */
+	public function indexAction()
+	{
+		// the config hash
+		$config = $this->getConfig()['TpMinify'];
 
-        // some important stuff
-        $config['serveOptions']['quiet'] = true;
+		// some important stuff
+		$config['serveOptions']['quiet'] = true;
 
-        // the time correction
-        Minify::$uploaderHoursBehind = $config['uploaderHoursBehind'];
+		// the time correction
+		Minify::$uploaderHoursBehind = $config['uploaderHoursBehind'];
 
-        // the cache engine
-        Minify::setCache($config['cachePath'] ?: '', $config['cacheFileLocking']);
+		// the cache engine
+		Minify::setCache($config['cachePath'] ?: '', $config['cacheFileLocking']);
 
-        // doc root corrections
-        if ($config['documentRoot']) {
-            $_SERVER['DOCUMENT_ROOT'] = $config['documentRoot'];
-            Minify::$isDocRootSet = true;
-        }
+		// doc root corrections
+		if ($config['documentRoot']) {
+			$_SERVER['DOCUMENT_ROOT'] = $config['documentRoot'];
+			Minify::$isDocRootSet = true;
+		}
 
-        // check for URI versioning
-        if (preg_match('~&\d~', $request->getUriString())) {
-            $config['serveOptions']['maxAge'] = 31536000;
-        }
+		$request = $this->getRequest();
+		// check for URI versioning
+		if (preg_match('~&\d~', $request->getUriString())) {
+			$config['serveOptions']['maxAge'] = 31536000;
+		}
 
-        // minify result as array of information
-        $result = Minify::serve('MinApp', $config['serveOptions']);
+		// minify result as array of information
+		$result = Minify::serve('MinApp', $config['serveOptions']);
 
-        // some corrections
-        if (isset($result['headers']['_responseCode'])) {
-            unset($result['headers']['_responseCode']);
-        }
+		// some corrections
+		if (isset($result['headers']['_responseCode'])) {
+			unset($result['headers']['_responseCode']);
+		}
 
-        // the headers set
-        $headers = new Headers();
-        $headers->addHeaders($result['headers']);
+		// the headers set
+		$headers = new Headers();
+		$headers->addHeaders($result['headers']);
 
-        // final output
-        return $response->setHeaders($headers)
-            ->setStatusCode($result['statusCode'])
-            ->setContent($result['content']);
-    }
+		$response = $this->getResponse();
+		// final output
+		return $response->setHeaders($headers)
+			->setStatusCode($result['statusCode'])
+			->setContent($result['content']);
+	}
 
-    protected function getConfig():array{
-    	return $this->config;
+	protected function getConfig():array{
+		return $this->config;
 	}
 }
