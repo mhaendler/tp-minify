@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": ">=7.2",
-        "mrclay/minify": ">=2.2"
+        "mrclay/minify": ">=3.0.10"
     },
     "autoload": {
         "psr-0": {"TpMinify": "src/src/"},
