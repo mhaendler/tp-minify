@@ -17,6 +17,11 @@ use Laminas\Stdlib\RequestInterface;
 use Laminas\Http\Headers;
 
 use Minify;
+use Minify_Cache_File;
+use Minify_Controller_MinApp;
+use Minify_Source_Factory;
+use Minify_Env;
+
 
 /**
  * Class Index
@@ -49,17 +54,9 @@ class IndexController extends AbstractActionController
 		// some important stuff
 		$config['serveOptions']['quiet'] = true;
 
-		// the time correction
-		Minify::$uploaderHoursBehind = $config['uploaderHoursBehind'];
-
 		// the cache engine
-		Minify::setCache($config['cachePath'] ?: '', $config['cacheFileLocking']);
-
-		// doc root corrections
-		if ($config['documentRoot']) {
-			$_SERVER['DOCUMENT_ROOT'] = $config['documentRoot'];
-			Minify::$isDocRootSet = true;
-		}
+		$fileCache = new Minify_Cache_File($config['cachePath'] ?: '', $config['cacheFileLocking']);
+		$minify = new Minify($fileCache);
 
 		$request = $this->getRequest();
 		// check for URI versioning
@@ -67,8 +64,12 @@ class IndexController extends AbstractActionController
 			$config['serveOptions']['maxAge'] = 31536000;
 		}
 
+		$env = new Minify_Env($config);
+		$factory = new Minify_Source_Factory($env, $config);
+		$controller = new Minify_Controller_MinApp($env, $factory);
+
 		// minify result as array of information
-		$result = Minify::serve('MinApp', $config['serveOptions']);
+		$result = $minify->serve($controller, $config['serveOptions']);
 
 		// some corrections
 		if (isset($result['headers']['_responseCode'])) {
